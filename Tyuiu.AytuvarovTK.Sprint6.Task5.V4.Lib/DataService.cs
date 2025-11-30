@@ -13,7 +13,8 @@ namespace Tyuiu.AytuvarovTK.Sprint6.Task5.V4.Lib
             var resultsList = new List<double>();
             foreach (var line in lines)
             {
-                if (double.TryParse(line, NumberStyles.Any, CultureInfo.InvariantCulture, out double value))
+                var s = line.Trim();
+                if (double.TryParse(s, NumberStyles.Any, CultureInfo.CurrentCulture, out double value))
                 {
                     // include only integer values (values without fractional part)
                     if (Math.Abs(value - Math.Round(value)) < 1e-9)
