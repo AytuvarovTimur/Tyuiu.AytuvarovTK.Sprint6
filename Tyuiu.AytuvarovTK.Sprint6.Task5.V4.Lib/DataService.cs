@@ -1,4 +1,7 @@
-﻿using tyuiu.cources.programming.interfaces.Sprint6;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using tyuiu.cources.programming.interfaces.Sprint6;
 namespace Tyuiu.AytuvarovTK.Sprint6.Task5.V4.Lib
 {
     public class DataService : ISprint6Task5V4
@@ -7,19 +10,19 @@ namespace Tyuiu.AytuvarovTK.Sprint6.Task5.V4.Lib
         {
             // Прочитать данные из файла InPutFileTask5V4.txt. Вывести в dataGridView. Вывести все целые числа.. Построить диаграмму по этим значениям. Графический интерфейс пользователя оформить по примеру из лекции. У вещественных значений округлить до трёх знаков после запятой.
             string[] lines = System.IO.File.ReadAllLines(path);
-            double[] results = new double[lines.Length];
-            for (int i = 0; i < lines.Length; i++)
+            var resultsList = new List<double>();
+            foreach (var line in lines)
             {
-                if (double.TryParse(lines[i], out double value))
+                if (double.TryParse(line, NumberStyles.Any, CultureInfo.InvariantCulture, out double value))
                 {
-                    results[i] = Math.Round(value, 3);
-                }
-                else
-                {
-                    results[i] = 0; // или обработать ошибку по-другому
+                    // include only integer values (values without fractional part)
+                    if (Math.Abs(value - Math.Round(value)) < 1e-9)
+                    {
+                        resultsList.Add(Math.Round(value, 3));
+                    }
                 }
             }
-            return results;
+            return resultsList.ToArray();
         }
     }
 }
