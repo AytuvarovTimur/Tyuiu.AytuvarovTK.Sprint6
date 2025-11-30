@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using tyuiu.cources.programming.interfaces.Sprint6;
 namespace Tyuiu.AytuvarovTK.Sprint6.Task7.V10.Lib
 {
@@ -8,7 +9,8 @@ namespace Tyuiu.AytuvarovTK.Sprint6.Task7.V10.Lib
         {
             // Дан файл InPutFileTask7V10.csv в котором хранится матрица целочисленных значений. Загрузить файл через openFileDialog в объект dataGridViewIn. Изменить в пятой строке значения от 5 до 10 на 0. Результат вывести в объект dataGridViewOut. Сохранить результат в файл OutPutFileTask7.csv через saveFileDialog. Графический интерфейс пользователя оформить по образцу как в лекции
 
-            string[] lines = System.IO.File.ReadAllLines(path);
+            string[] rawLines = System.IO.File.ReadAllLines(path);
+            string[] lines = rawLines.Where(l => !string.IsNullOrWhiteSpace(l)).ToArray();
             if (lines.Length == 0)
                 return new int[0, 0];
 
